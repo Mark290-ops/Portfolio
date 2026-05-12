@@ -46,6 +46,17 @@
       overflow-x: hidden;
     }
 
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    /* Apply to the specific culprit sections */
+    .hero, .projects-section, .section {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
     /* ── NOISE OVERLAY ── */
     body::before {
       content: '';
@@ -633,8 +644,12 @@
 
     .stack-marquee {
       overflow: hidden;
+      overflow: hidden;
+      width: 100%;
+      max-width: 100vw;
       mask: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     }
+      
 
     .stack-track {
       display: flex;
@@ -923,15 +938,14 @@
       }
     }
 
-
-   
-    
     .projects-section {
       padding: 100px 48px;
       position: relative;
       overflow: hidden;
       border-top: 1px solid var(--border, #1e1e1e);
       border-bottom: 1px solid var(--border, #1e1e1e);
+      max-width: 100%;
+      overflow-x: hidden;
     }
 
     .projects-glow {
@@ -1042,7 +1056,6 @@
       -webkit-user-select: none;
     }
 
-    /* Collapsed — all stacked, slight offset per card */
     .card:nth-child(1) { transform: translate(0px, 0px)   rotate(0deg);   z-index: 5; }
     .card:nth-child(2) { transform: translate(2px, -4px)  rotate(0.5deg); z-index: 4; }
     .card:nth-child(3) { transform: translate(4px, -8px)  rotate(1deg);   z-index: 3; }
@@ -1197,8 +1210,7 @@
       opacity: 0;
       pointer-events: none;
     }
-
-    /* ── Responsive ───────────────────────────────────────── */
+    
     @media (max-width: 768px) {
       .projects-section { padding: 80px 24px; }
 
@@ -1456,7 +1468,6 @@
   </div>
   <!-- END OF MARQUEE SECTION -->
 
-  
   <!--MY PROJECTS SECTION-->
   <section id="projects" class="projects-section">
 
@@ -1562,7 +1573,6 @@
 
   </section>
   <!-- END OF PROJECTS SECTION-->
-
 
   <!-- CONTACT SECTION -->
   <section class="contact-section" id="contact">
