@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width= , initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --black: #0f0f0e;
+            --off-white: #f7f5f0;
+            --warm-gray: #e8e4dc;
+            --mid-gray: #a09890;
+            --accent: #8a5d09;
+            --accent-dark: #a56d0d;
+            --text: #1a1816;
+            --text-muted: #3b3735;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+
+        #portfolio {
+            padding: 7rem 0;
+            position: relative;
+            overflow: hidden;
+            
+            }
+        #portfolio::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+           
+            pointer-events: none;
+            }
+
+        .portfolio-header {
+            padding: 0 5vw;
+            margin-bottom: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: end;
+            gap: 2rem;
+        }
+        .section-eyebrow {
+            color: var(--accent);
+            font-weight: 300;
+        }
+
+        .portfolio-header .section-heading { color: var(--black); }
+        .portfolio-header .section-sub { color: var(--text); }
+
+        /* Fan carousel */
+    .carousel-stage {
+      position: relative;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+    }
+    .carousel-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .c-card {
+      position: absolute;
+      width: 240px;
+      height: 300px;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+      user-select: none;
+    }
+    .c-card-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    /* Glassmorphism overlay at bottom of each card */
+    .c-card-glass {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.25rem 1.25rem 1rem;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .c-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.1rem;
+    }
+    .c-card-type {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Nav arrows */
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .carousel-arrow {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--black);
+      background: #fff;
+      backdrop-filter: blur(8px);
+      color: var(--black);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .carousel-arrow:hover {
+      background: var(--black);
+      color: #fff;
+    }
+    </style>
+</head>
+<body>
+    <div id="portfolio" reveal>
+        <div class="carousel-stage">
+        <div class="carousel-track" id="carouselTrack"></div>
+        </div>
+
+        <div class="carousel-nav">
+        <button class="carousel-arrow" id="carouselPrev" aria-label="Previous">&#8592;</button>
+        <button class="carousel-arrow" id="carouselNext" aria-label="Next">&#8594;</button>
+        </div>
+    </div>
+
+
+  <script>
+    const portfolioItems = [
+    { src: 'img1.jpg', name: 'App Flyer', type: 'Print · Brand Design' },
+    { src: 'img2.jpg', name: 'Brand Identity', type: 'Logo · Visual System' },
+    { src: 'img3.jpg', name: 'Social Media Kit', type: 'Digital · Content Design' },
+    { src: 'img9.png', name: 'Corporate Identity', type: 'Stationery · Brand' },
+    { src: 'img4.jpg', name: 'Product Branding', type: 'Packaging · Identity' },
+    { src: 'img11.png', name: 'Corporate Identity', type: 'Stationery · Brand' },
+    { src: 'img7.jpg', name: 'Corporate Identity', type: 'Stationery · Brand' },
+    { src: 'img8.png', name: 'Web3 & Crypto', type: 'Logo · Brand' },
+    { src: 'img6.jpg', name: 'Product Design', type: 'Digital · Brand' },
+    { src: 'img10.png', name: 'Foreign Exchange', type: 'Stationery · Brand' },
+    { src: 'img5.jpg', name: 'Poster Design', type: 'Print · Typography' },
+  ];
+
+  // Clones list for seamless infinite loop (prepend last 2, append first 2)
+  const VISIBLE = 2; // cards shown on each side
+  const track = document.getElementById('carouselTrack');
+
+  // Build cloned infinite array: [...tail clones, ...originals, ...head clones]
+  function buildInfiniteList() {
+    const tail = portfolioItems.slice(-VISIBLE);
+    const head = portfolioItems.slice(0, VISIBLE);
+    return [...tail, ...portfolioItems, ...head];
+  }
+
+  const infiniteItems = buildInfiniteList();
+  // Real active index starts at VISIBLE (so clones sit before it)
+  let activeIdx = VISIBLE;
+  let isAnimating = false;
+
+  function buildCards() {
+    track.innerHTML = '';
+    infiniteItems.forEach((item, i) => {
+      const el = document.createElement('div');
+      el.className = 'c-card';
+      el.dataset.index = i;
+      el.innerHTML = `
+        <div class="c-card-inner" style="background:#111;">
+          <img src="${item.src}" alt="${item.name}"
+            style="width:100%;height:100%;object-fit:cover;display:block;border-radius:18px;"
+            onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a1410,#2c1f10)';" />
+          <div class="c-card-glass">
+            <p class="c-card-name">${item.name}</p>
+            <p class="c-card-type">${item.type}</p>
+          </div>
+        </div>`;
+      el.addEventListener('click', () => {
+        if (isAnimating || i === activeIdx) return;
+        activeIdx = i;
+        positionCards(true);
+      });
+      track.appendChild(el);
+    });
+    positionCards(false);
+  }
+
+  function positionCards(animate) {
+    const cards = track.querySelectorAll('.c-card');
+    cards.forEach((card, i) => {
+      const offset = i - activeIdx;
+      const absOffset = Math.abs(offset);
+      const transition = animate ? 'all 0.55s cubic-bezier(0.25,0.46,0.45,0.94)' : 'none';
+      card.style.transition = transition;
+
+      if (absOffset > VISIBLE + 1) {
+        card.style.opacity = '0';
+        card.style.pointerEvents = 'none';
+        card.style.zIndex = '0';
+        card.style.transform = `translateX(${offset * 200}px) translateZ(-400px) scale(0.5)`;
+        return;
+      }
+
+      const translateX = offset * 200;
+      const translateZ = -absOffset * 120;
+      const rotateY = offset * -22;
+      const scale = 1 - absOffset * 0.12;
+      const opacity = absOffset > VISIBLE ? 0 : 1 - absOffset * 0.35;
+
+      card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+      card.style.opacity = opacity;
+      card.style.zIndex = 10 - absOffset;
+      card.style.pointerEvents = absOffset <= VISIBLE ? 'auto' : 'none';
+      card.style.boxShadow = offset === 0
+        ? '0 32px 80px rgba(0,0,0,0.7)'
+        : '0 16px 40px rgba(0,0,0,0.4)';
+    });
+
+    // After animation, silently jump to the real item if we hit a clone
+    if (animate) {
+      isAnimating = true;
+      setTimeout(() => {
+        const total = infiniteItems.length;
+        const realCount = portfolioItems.length;
+        // Hit tail clone zone → jump to real end
+        if (activeIdx < VISIBLE) {
+          activeIdx = VISIBLE + realCount + (activeIdx);
+          positionCards(false);
+        }
+        // Hit head clone zone → jump to real start
+        else if (activeIdx >= VISIBLE + realCount) {
+          activeIdx = VISIBLE + (activeIdx - (VISIBLE + realCount));
+          positionCards(false);
+        }
+        isAnimating = false;
+      }, 560);
+    }
+  }
+
+  function goNext() {
+    if (isAnimating) return;
+    activeIdx++;
+    positionCards(true);
+  }
+  function goPrev() {
+    if (isAnimating) return;
+    activeIdx--;
+    positionCards(true);
+  }
+
+  document.getElementById('carouselNext').addEventListener('click', goNext);
+  document.getElementById('carouselPrev').addEventListener('click', goPrev);
+
+  // Touch/drag support
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) { diff > 0 ? goNext() : goPrev(); }
+  });
+
+  // Keyboard support
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goNext();
+    if (e.key === 'ArrowLeft') goPrev();
+  });
+
+  buildCards();
+
+  </script>
+</body>
+</html>
